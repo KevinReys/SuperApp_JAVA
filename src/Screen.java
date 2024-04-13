@@ -1,57 +1,62 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
+//Tela inicial: Boas vindas.
 public class Screen extends JFrame {
     public Screen() {
-
         setTitle("SuperApp");
-        setVisible(true);
         setSize(800, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Fechar programa
-        setResizable(false); //Evita mudar tamanho da tela e expandir
-        setLocationRelativeTo(null); //Quando ele inicializa, fica no meio da tela
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
 
-        setLayout(null);
+        // Criação do JLabel para exibir a imagem de plano de fundo
+        JLabel background = new JLabel(new ImageIcon("img_backg/back_screen.jpg"));
+        add(background);
+        background.setLayout(new FlowLayout());
 
-        JButton jButton = new JButton();
-        jButton.setText("Clique 1");
-        jButton.setBounds(240, 200, 200, 70);
-        jButton.setFont(new Font("Arial", Font.BOLD, 20));
-        jButton.setForeground(new Color(255, 255, 255)); // COR DA FONTE DA LETRA
-        jButton.setBackground(new Color(9, 10, 9 )); // COR DO BACKGROUND DO BOTÃO
+        // Configuração do botão 1 - LOGIN
+        JButton jButton = new JButton("Login");
+        jButton.setFont(new Font("Arial", Font.BOLD, 15));
+        jButton.setForeground(Color.BLACK);
+        jButton.setBackground(new Color(255, 255, 255));
+        // Configuração do botão 2 - CADASTRO
+        JButton jButton2 = new JButton("Cadastro");
+        jButton2.setFont(new Font("Arial", Font.BOLD, 15));
+        jButton2.setForeground(Color.BLACK);
+        jButton2.setBackground(new Color(255, 255, 255));
 
-        add(jButton);
-        jButton.addActionListener(this::outroteste);
 
+        // Adiciona os botões ao JLabel
+        background.add(jButton);
+        background.add(jButton2);
 
+        // Adiciona os listeners aos botões
+        jButton.addActionListener(e -> openNewWindow("Login"));
+        jButton2.addActionListener(e -> openNewWindow("Cadastro"));
 
-        JButton jButton2 = new JButton();
-        jButton2.setText("Clique 2");
-        jButton2.setBounds(475, 200, 200, 70);
-        jButton2.setFont(new Font("Arial", Font.BOLD, 20));
-        jButton2.setForeground(new Color(255, 255, 255));
-        jButton2.setBackground(new Color(9, 10, 9 ));
-
-        add(jButton2);
-        jButton2.addActionListener(this::teste);
-
+        setVisible(true);
     }
 
-    private void teste(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(null, "Mensagem do título 1", "Título 1",
-                JOptionPane.INFORMATION_MESSAGE);
-    }
+    private void openNewWindow(String title) {
+        JFrame newWindow = new JFrame(title);
+        newWindow.setSize(800, 500);
+        newWindow.setLocationRelativeTo(null);
+        newWindow.setVisible(true);
 
-    private void outroteste(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(null, "Mensagem do título 2", "Título 2",
-                JOptionPane.WARNING_MESSAGE);
-    }
+        // Botão de voltar à nova janela
+        JButton backButton = new JButton("Voltar");
+        backButton.addActionListener(e -> {
+            newWindow.dispose(); // Fecha a nova janela
+            setVisible(true);   // Torna a tela principal visível novamente
+        });
+        newWindow.add(backButton, BorderLayout.SOUTH);
 
+        newWindow.setVisible(true);
+    }
 
     public static void main(String[] args) {
-        // Criar uma instância da classe Screen para mostrar a tela
         new Screen();
     }
 }
